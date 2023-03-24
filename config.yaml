@@ -1,0 +1,23 @@
+variant: flatcar
+version: 1.0.0
+passwd:
+  users:
+    - name: core
+      # For password crypt, use: mkpasswd -m sha-512
+      password_hash: $5$TI35KR6bOJGbxd0R$v4fJg7fcSIlGHspDJZGh1IoGRgv6qszf4roCS/KFOH8
+      home_dir: /home/core
+      shell: /bin/bash
+systemd:
+  units:
+    - name: docker.service
+      enabled: true
+    - name: containerd.service
+      enabled: true
+storage:
+  files:
+    - path: /etc/ssh/sshd_config.d/20-enable-passwords.conf
+      mode: 0644
+      contents:
+        inline: |
+          # Enable SSH password login
+          PasswordAuthentication yes
